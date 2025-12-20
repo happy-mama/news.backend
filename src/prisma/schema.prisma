@@ -1,0 +1,77 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum news_source_name {
+  openNET
+}
+
+enum news_status {
+  draft
+  published
+  hidden
+}
+
+model service {
+  id    Int    @id() @default(autoincrement())
+  key   String
+  value String
+}
+
+model news {
+  id   Int    @id() @default(autoincrement())
+  slug String @unique
+
+  name        String @default("")
+  description String @default("")
+
+  source_name news_source_name?
+  source_link String            @default("")
+
+  md_file_path String @default("")
+
+  likes    Int @default(0)
+  dislikes Int @default(0)
+
+  stats_id  Int        @unique
+  newsStats news_stats @relation(fields: [stats_id], references: [id], onDelete: Cascade)
+
+  created_at DateTime  @default(now())
+  updated_at DateTime? @updatedAt()
+
+  status       news_status @default(hidden)
+  published_at DateTime?
+}
+
+model news_stats {
+  id Int @id() @default(autoincrement())
+
+  news news?
+
+  e_open   Int @default(0) // пользователь открыл новость
+  e_look   Int @default(0) // пользователь увидел блок с новостью на главной
+  e_bounce Int @default(0) // пользователь открыл и сразу закрыл (<8 сек)
+
+  t_1min  Int @default(0) // чтение больше 1 минуты
+  t_2min  Int @default(0) // чтение больше 2 минут
+  t_3min  Int @default(0) // чтение больше 3 минут
+  t_5min  Int @default(0) // чтение больше 5 минут
+  t_10min Int @default(0) // чтение больше 10 минут
+  t_total Int @default(0) // чтение в общем (обновление раз в 15 секунд)
+
+  p_25  Int @default(0) // процент прокрутки страницы пользователем до отметки (начал читать)
+  p_50  Int @default(0) // процент прокрутки страницы пользователем до отметки
+  p_75  Int @default(0) // процент прокрутки страницы пользователем до отметки
+  p_100 Int @default(0) // процент прокрутки страницы пользователем до отметки (дочитал)
+
+  sf_main    Int @default(0) // пользователь открыл новость с главной
+  sf_search  Int @default(0) // пользователь открыл новость из поиска
+  sf_another Int @default(0) // пользователь открыл новость с другого сайта
+
+  updated_at DateTime? @updatedAt()
+}
