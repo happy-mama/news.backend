@@ -8,6 +8,8 @@ interface ENVList {
   nodeEnv: "production" | "dev";
   port: number;
 
+  PRISMA_POSTGRESS_URL: string;
+
   MINIO_URL: string;
   MINIO_CREDENTIAL_KEY_ID: string;
   MINIO_CREDENTIAL_ACCESS_KEY: string;
@@ -41,6 +43,13 @@ class ENV {
         onError: this.validationError,
       }),
 
+      PRISMA_POSTGRESS_URL: validateType({
+        type: "string",
+        value: process.env.PRISMA_POSTGRESS_URL,
+        fieldName: "PRISMA_POSTGRESS_URL",
+        onError: this.validationError,
+      }),
+
       MINIO_URL: validateType({
         type: "string",
         value: process.env.MINIO_URL,
@@ -50,14 +59,14 @@ class ENV {
 
       MINIO_CREDENTIAL_ACCESS_KEY: validateType({
         type: "string",
-        value: process.env.MINIO_URL,
+        value: process.env.MINIO_CREDENTIAL_ACCESS_KEY,
         fieldName: "MINIO_CREDENTIAL_ACCESS_KEY",
         onError: this.validationError,
       }),
 
       MINIO_CREDENTIAL_KEY_ID: validateType({
         type: "string",
-        value: process.env.MINIO_URL,
+        value: process.env.MINIO_CREDENTIAL_KEY_ID,
         fieldName: "MINIO_CREDENTIAL_KEY_ID",
         onError: this.validationError,
       }),

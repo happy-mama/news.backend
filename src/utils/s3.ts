@@ -6,11 +6,13 @@ import env from "./env.js";
 const AVAILABLE_BUCKETS = ["news.md"] as const;
 
 const s3 = new S3Client({
+  region: "us-east-1",
   endpoint: env.get("MINIO_URL"),
   credentials: {
     accessKeyId: env.get("MINIO_CREDENTIAL_KEY_ID"),
     secretAccessKey: env.get("MINIO_CREDENTIAL_ACCESS_KEY"),
   },
+  forcePathStyle: true,
 });
 
 async function getFile(
