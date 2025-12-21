@@ -8,6 +8,8 @@ const router = Router({
 
 router.get(API_PATH.news.getLastNews, newsService.getLastNews);
 
-// router.get(API_PATH.news.openNews);
+router.get(API_PATH.news.loadNewsData, newsService.loadNewsData);
+
+router.post(API_PATH.news.rateNews, newsService.rateNews);
 
 export default router;

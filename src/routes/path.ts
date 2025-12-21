@@ -2,7 +2,8 @@ const API_PATH = {
   news: {
     base: "/news",
     getLastNews: "/",
-    openNews: "/:slug",
+    loadNewsData: "/load/:slug",
+    rateNews: "/rate/:slug",
   },
 };
 
