@@ -13,7 +13,6 @@ async function getLastNews() {
       likes: true,
       dislikes: true,
       source_name: true,
-      source_link: true,
       published_at: true,
     },
     orderBy: { published_at: "desc" },
