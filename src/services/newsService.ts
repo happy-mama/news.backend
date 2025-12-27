@@ -3,7 +3,7 @@ import { StatusCodes } from "http-status-codes";
 
 import newsRepo from "../repos/newsRepo.js";
 import { errorResponse, successResponse } from "../utils/response.js";
-import { validateStringValues } from "../utils/validators.js";
+import { validateStringValues, validateType } from "../utils/validators.js";
 
 async function getLastNews(req: Request, res: Response) {
   const data = await newsRepo.getLastNews();
@@ -65,6 +65,14 @@ async function rateNews(req: Request, res: Response) {
     data,
   });
 }
+
+// async function createNews(req: Request, res: Response) {
+//   const params = req.params;
+
+//   const onError = () => {};
+
+//   validateType({type: "string", value: params.slug});
+// }
 
 export default {
   getLastNews,
